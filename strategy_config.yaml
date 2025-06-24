@@ -1,0 +1,157 @@
+# Strategy Configuration for BTC Qlib Strategy
+
+# Strategy Parameters
+strategy:
+  name: "BTC_Multi_Factor_Strategy"
+  version: "2.0"
+  description: "Professional Bitcoin quantitative trading strategy based on Qlib framework"
+  
+# Signal Generation
+signal:
+  prediction_threshold: 0.6    # Signal threshold for position taking
+  signal_smoothing: true       # Apply signal smoothing
+  smoothing_window: 3          # Rolling window for smoothing
+  
+  # Signal components
+  components:
+    trend_following:
+      enabled: true
+      weight: 0.3
+      lookback_period: 20
+      
+    mean_reversion:
+      enabled: true
+      weight: 0.2
+      lookback_period: 10
+      
+    momentum:
+      enabled: true
+      weight: 0.3
+      lookback_period: 5
+      
+    volatility:
+      enabled: true
+      weight: 0.2
+      lookback_period: 20
+
+# Risk Management
+risk_management:
+  max_position_size: 1.0       # Maximum position size (1.0 = 100%)
+  stop_loss: 0.05              # 5% stop loss
+  take_profit: 0.10            # 10% take profit
+  
+  # Position sizing
+  position_sizing:
+    method: "kelly_criterion"   # kelly_criterion, fixed_fraction, volatility_target
+    base_size: 0.5             # Base position size
+    max_leverage: 2.0          # Maximum leverage
+    
+  # Dynamic risk adjustment
+  dynamic_adjustment:
+    enabled: true
+    volatility_lookback: 20
+    volatility_threshold: 0.02
+    adjustment_factor: 0.5
+
+# Portfolio Management
+portfolio:
+  rebalance_frequency: "daily"  # daily, weekly, monthly
+  transaction_cost: 0.001       # 0.1% transaction cost
+  slippage: 0.0005             # 0.05% slippage
+  
+  # Multi-asset support
+  assets:
+    BTC/USDT:
+      weight: 0.7
+      min_weight: 0.5
+      max_weight: 0.9
+    ETH/USDT:
+      weight: 0.3
+      min_weight: 0.1
+      max_weight: 0.5
+
+# Backtesting
+backtest:
+  start_date: "2022-01-01"
+  end_date: "2024-12-31"
+  initial_capital: 100000      # USD
+  benchmark: "BTC/USDT"        # Benchmark for comparison
+  
+  # Performance metrics
+  metrics:
+    - "total_return"
+    - "annual_return"
+    - "sharpe_ratio"
+    - "max_drawdown"
+    - "win_rate"
+    - "profit_factor"
+    - "calmar_ratio"
+    - "sortino_ratio"
+
+# Trading Rules
+trading:
+  # Entry rules
+  entry:
+    min_signal_strength: 0.6
+    min_confidence: 0.7
+    max_positions: 5
+    
+  # Exit rules
+  exit:
+    profit_target: 0.10        # 10% profit target
+    stop_loss: 0.05            # 5% stop loss
+    time_stop: 30              # Exit after 30 days if no target hit
+    
+  # Order management
+  orders:
+    order_type: "market"       # market, limit, stop
+    execution_delay: 1         # 1 bar execution delay
+    partial_fill: true         # Allow partial fills
+
+# Market Conditions
+market_conditions:
+  # Bull market parameters
+  bull_market:
+    signal_multiplier: 1.2
+    risk_multiplier: 1.1
+    
+  # Bear market parameters
+  bear_market:
+    signal_multiplier: 0.8
+    risk_multiplier: 0.7
+    
+  # Sideways market parameters
+  sideways_market:
+    signal_multiplier: 0.9
+    risk_multiplier: 0.9
+
+# Monitoring and Alerts
+monitoring:
+  performance_alert_threshold: -0.05  # Alert if daily loss > 5%
+  drawdown_alert_threshold: -0.15     # Alert if drawdown > 15%
+  
+  # Real-time monitoring
+  real_time:
+    enabled: false
+    update_frequency: "1m"
+    alert_channels: ["email", "telegram"]
+    
+# Strategy Variants
+variants:
+  conservative:
+    prediction_threshold: 0.8
+    max_position_size: 0.5
+    stop_loss: 0.03
+    take_profit: 0.06
+    
+  balanced:
+    prediction_threshold: 0.6
+    max_position_size: 0.7
+    stop_loss: 0.05
+    take_profit: 0.10
+    
+  aggressive:
+    prediction_threshold: 0.4
+    max_position_size: 1.0
+    stop_loss: 0.08
+    take_profit: 0.15 

@@ -1,0 +1,116 @@
+# Model Configuration for BTC Qlib Strategy
+
+# Model Selection
+models:
+  ensemble:
+    enabled: true
+    method: "weighted_average"  # weighted_average, voting, stacking
+    
+  individual_models:
+    random_forest:
+      enabled: true
+      n_estimators: 200
+      max_depth: 10
+      min_samples_split: 5
+      min_samples_leaf: 2
+      random_state: 42
+      
+    gradient_boosting:
+      enabled: true
+      n_estimators: 150
+      learning_rate: 0.1
+      max_depth: 6
+      subsample: 0.8
+      random_state: 42
+      
+    ridge_regression:
+      enabled: true
+      alpha: 10.0
+      random_state: 42
+      
+    lasso_regression:
+      enabled: true
+      alpha: 0.1
+      random_state: 42
+      
+    lightgbm:
+      enabled: false
+      objective: "regression"
+      num_leaves: 31
+      learning_rate: 0.05
+      feature_fraction: 0.9
+      
+    xgboost:
+      enabled: false
+      objective: "reg:squarederror"
+      max_depth: 6
+      learning_rate: 0.1
+      subsample: 0.8
+
+# Feature Selection
+feature_selection:
+  method: "ic_analysis"  # ic_analysis, mutual_info, rfe
+  ic_threshold: 0.02
+  ir_threshold: 0.5
+  max_features: 50
+  
+# Cross Validation
+cross_validation:
+  method: "time_series_split"
+  n_splits: 5
+  train_window: 252  # 1 year in trading days
+  test_window: 21    # 1 month in trading days
+  gap: 0             # No gap between train and test
+  
+# Hyperparameter Optimization
+hyperparameter_optimization:
+  enabled: true
+  method: "randomized_search"  # grid_search, randomized_search, bayesian
+  n_iter: 50
+  cv_folds: 5
+  scoring: "r2"
+  random_state: 42
+  
+# Model Training
+training:
+  target_column: "future_return_1d"
+  prediction_horizon: 1  # days
+  min_training_samples: 100
+  validation_split: 0.2
+  
+# Model Evaluation
+evaluation:
+  metrics:
+    - "r2_score"
+    - "mean_squared_error"
+    - "mean_absolute_error"
+    - "direction_accuracy"
+    - "information_coefficient"
+    
+  walk_forward_analysis:
+    enabled: true
+    train_window: 252
+    test_window: 21
+    step_size: 21
+    
+# Risk Management
+risk_management:
+  lookforward_bias_check: true
+  multicollinearity_threshold: 0.8
+  feature_stability_check: true
+  
+# Model Persistence
+persistence:
+  save_models: true
+  model_format: "joblib"  # joblib, pickle
+  save_path: "models/"
+  versioning: true
+  
+# Monitoring
+monitoring:
+  performance_tracking: true
+  feature_importance_tracking: true
+  prediction_distribution_monitoring: true
+  alert_thresholds:
+    r2_drop: 0.1
+    prediction_drift: 0.2 

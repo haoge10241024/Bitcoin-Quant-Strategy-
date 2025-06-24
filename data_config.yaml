@@ -1,0 +1,77 @@
+# Data Configuration for BTC Qlib Strategy
+
+# Data Sources
+data_sources:
+  primary: "okx"
+  backup: "binance"
+  
+# OKX API Configuration
+okx:
+  base_url: "https://www.okx.com"
+  api_version: "v5"
+  rate_limit: 20  # requests per second
+  timeout: 30     # seconds
+  
+# Symbols Configuration
+symbols:
+  primary: "BTC/USDT"
+  secondary: ["ETH/USDT", "BNB/USDT"]
+  
+# Timeframes
+timeframes:
+  - "1m"
+  - "5m"
+  - "15m"
+  - "1h"
+  - "4h"
+  - "1d"
+  - "1w"
+
+# Data Collection Parameters
+data_collection:
+  history_period: "3y"      # 3 years
+  update_frequency: "1h"    # Update every hour
+  max_retries: 3
+  retry_delay: 5            # seconds
+  
+# Data Quality Control
+quality_control:
+  missing_threshold: 0.05   # 5% missing values threshold
+  outlier_threshold: 3.0    # 3-sigma outlier detection
+  ohlc_validation: true     # Enable OHLC logic validation
+  time_continuity_check: true
+  
+# Data Storage
+storage:
+  format: "csv"             # csv, parquet, hdf5
+  compression: "gzip"
+  backup_enabled: true
+  retention_period: "5y"    # 5 years
+  
+# Paths
+paths:
+  raw_data: "data/raw/"
+  processed_data: "data/processed/"
+  factors: "data/factors/"
+  cache: "data/cache/"
+  
+# Feature Engineering
+features:
+  price_features:
+    - "open"
+    - "high" 
+    - "low"
+    - "close"
+  volume_features:
+    - "volume"
+    - "volume_ma"
+  technical_indicators:
+    - "rsi"
+    - "macd"
+    - "bollinger_bands"
+    - "moving_averages"
+  statistical_features:
+    - "returns"
+    - "volatility"
+    - "skewness"
+    - "kurtosis" 
