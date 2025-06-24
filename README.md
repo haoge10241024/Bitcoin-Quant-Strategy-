@@ -242,15 +242,6 @@ print(f"最佳模型性能: {results['validation_results']['best_performance']}"
 - [模型训练教程](docs/model_performance.md) - 模型训练和优化指南
 - [API参考文档](docs/api_reference.md) - 完整的API文档
 
-## 🤝 贡献指南
-
-我们欢迎社区贡献！请遵循以下步骤：
-
-1. Fork 项目
-2. 创建特性分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 创建 Pull Request
 
 ### 开发环境设置
 ```bash
@@ -286,9 +277,7 @@ flake8 src/
 
 ## 📞 联系方式
 
-- **项目维护者**: Bitcoin Quant Strategy Developer
 - **邮箱**: 953534947@qq.com
-- **问题反馈**: [GitHub Issues](https://github.com/your-username/btc-qlib-strategy/issues)
 
 ---
 
